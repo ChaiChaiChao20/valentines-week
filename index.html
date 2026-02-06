@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>It’s Our Time 💖</title>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      height: 100vh;
+      background: linear-gradient(135deg, #ffb6c1, #ffc0cb, #ffd6e0);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    /* PASSWORD SCREEN */
+    .lock-screen {
+      position: fixed;
+      inset: 0;
+      background: linear-gradient(135deg, #ffb6c1, #ffc0cb);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 10;
+    }
+
+    .lock-box {
+      background: rgba(255,255,255,0.25);
+      backdrop-filter: blur(12px);
+      padding: 35px;
+      border-radius: 28px;
+      text-align: center;
+      width: 90%;
+      max-width: 360px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+    }
+
+    .lock-box h2 {
+      font-family: 'Pacifico', cursive;
+      color: #ff4d6d;
+      margin-bottom: 15px;
+      font-size: 28px;
+    }
+
+    .lock-box p {
+      font-size: 14px;
+      margin-bottom: 20px;
+      color: #5a2a2a;
+    }
+
+    .lock-box input {
+      width: 100%;
+      padding: 12px;
+      border-radius: 20px;
+      border: none;
+      text-align: center;
+      font-size: 18px;
+      outline: none;
+      margin-bottom: 15px;
+    }
+
+    .lock-box button {
+      background: linear-gradient(135deg, #ff4d6d, #ff758f);
+      border: none;
+      color: white;
+      padding: 12px 30px;
+      border-radius: 30px;
+      font-size: 15px;
+      cursor: pointer;
+    }
+
+    .error {
+      font-size: 12px;
+      color: #c9184a;
+      margin-top: 10px;
+      display: none;
+    }
+
+    /* floating hearts */
+    .heart {
+      position: absolute;
+      bottom: -20px;
+      font-size: 20px;
+      animation: floatUp 8s linear infinite;
+      opacity: 0.7;
+    }
+
+    @keyframes floatUp {
+      0% { transform: translateY(0); opacity: 0; }
+      20% { opacity: 1; }
+      100% { transform: translateY(-110vh); opacity: 0; }
+    }
+
+    .card {
+      background: rgba(255,255,255,0.25);
+      backdrop-filter: blur(12px);
+      border-radius: 28px;
+      padding: 40px 30px;
+      width: 90%;
+      max-width: 420px;
+      text-align: center;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+      animation: fadeIn 1.5s ease;
+      display: none;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .photo {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      overflow: hidden;
+      margin: 0 auto 20px;
+      border: 4px solid white;
+    }
+
+    .photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    h1 {
+      font-family: 'Pacifico', cursive;
+      font-size: 32px;
+      color: #ff4d6d;
+      margin-bottom: 10px;
+    }
+
+    .text {
+      font-size: 15px;
+      color: #5a2a2a;
+      line-height: 1.6;
+      margin-bottom: 25px;
+    }
+
+    .text span {
+      color: #ff4d6d;
+      font-weight: 600;
+    }
+
+    .tiny {
+      margin-top: 15px;
+      font-size: 12px;
+      opacity: 0.7;
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- PASSWORD SCREEN -->
+<div class="lock-screen" id="lockScreen">
+  <div class="lock-box">
+    <h2>Unlock 💖</h2>
+    <p>Only for the one who owns my heart</p>
+    <input type="number" id="password" placeholder="Enter password">
+    <button onclick="unlock()">Unlock 💌</button>
+    <div class="error" id="error">Wrong password, try again 🌸</div>
+  </div>
+</div>
+
+<!-- Floating hearts -->
+<script>
+  const hearts = ["💖","💘","💕","💞","🌸"];
+  for(let i=0;i<20;i++){
+    const h = document.createElement("div");
+    h.className = "heart";
+    h.innerText = hearts[Math.floor(Math.random()*hearts.length)];
+    h.style.left = Math.random()*100 + "vw";
+    h.style.animationDuration = (6 + Math.random()*6) + "s";
+    document.body.appendChild(h);
+  }
+</script>
+
+<!-- MAIN CARD -->
+<div class="card" id="mainCard">
+  <div class="photo">
+    <img src="images/US.jpeg" alt="Us 💖">
+  </div>
+
+  <h1>Hi my sweet little gugulala 🌷</h1>
+
+  <div class="text">
+    It’s that time of the year again…<br><br>
+    But this time —<br>
+    <span>that time isn’t just any time.</span><br><br>
+    It’s <span>our time</span>.<br><br>
+    Our first Valentine’s Week together 💕
+  </div>
+
+  <button onclick="goNext()">Dive in 💌</button>
+  <div class="tiny">Made with all my heart 💗</div>
+</div>
+
+<script>
+  const correctPassword = "250725";
+
+  function unlock() {
+    const input = document.getElementById("password").value;
+    const error = document.getElementById("error");
+
+    if (input === correctPassword) {
+      document.getElementById("lockScreen").style.display = "none";
+      document.getElementById("mainCard").style.display = "block";
+    } else {
+      error.style.display = "block";
+    }
+  }
+
+  function goNext() {
+    document.body.style.opacity = "0";
+    setTimeout(() => {
+      window.location.href = "days.html";
+    }, 800);
+  }
+</script>
+
+</body>
+</html>
