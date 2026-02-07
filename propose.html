@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Propose Day 💌</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .card {
+      background: white;
+      max-width: 500px;
+      margin: 50px auto;
+      padding: 40px;
+      border-radius: 25px;
+      box-shadow: 0 15px 30px rgba(255, 94, 120, 0.4);
+      text-align: center;
+    }
+
+    #question {
+      font-size: 24px;
+      color: #ff5e78;
+      margin: 20px 0;
+      font-weight: bold;
+    }
+
+    #buttons {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 30px;
+    }
+
+    button {
+      padding: 12px 25px;
+      font-size: 16px;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-weight: bold;
+    }
+
+    #yesBtn {
+      background: #ff5e78;
+      color: white;
+      position: relative;
+    }
+
+    #yesBtn:hover {
+      background: #ff3e5e;
+    }
+
+    .noBtn {
+      background: #95e1d3;
+      color: #333;
+    }
+
+    .noBtn:hover {
+      background: #7dd3c0;
+    }
+
+    .revealBtn {
+      background: #ffd700;
+      color: #333;
+      margin-top: 20px;
+    }
+
+    .revealBtn:hover {
+      background: #ffed4e;
+    }
+
+    /* Make yes button grow */
+    .growing {
+      animation: grow 0.3s ease-out;
+    }
+
+    @keyframes grow {
+      from {
+        transform: scale(1);
+      }
+      to {
+        transform: scale(1.2);
+      }
+    }
+
+    .final-message {
+      font-size: 18px;
+      color: #ff5e78;
+      font-weight: bold;
+      margin-top: 20px;
+      line-height: 1.6;
+    }
+
+    .oops-text {
+      font-size: 14px;
+      color: #ff5e78;
+      margin-top: 10px;
+      font-style: italic;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="card">
+    <h1>Propose Day 💌</h1>
+
+    <p id="question">Will you be my Valentine? 💕</p>
+
+    <!-- BUTTON CONTAINER -->
+    <div id="buttons">
+      <button id="yesBtn" onclick="yesRun()">Yes 💖</button>
+      <button class="noBtn" onclick="firstNo()">No 🙃</button>
+    </div>
+  </div>
+
+  <script>
+    let stage = 0;
+    let yesClicks = 0;
+    let revealClicks = 0;
+
+    // STAGE 0: YES BUTTON RUNS AWAY
+    function yesRun() {
+      if (stage !== 0) return;
+
+      const yesBtn = document.getElementById("yesBtn");
+      const maxX = window.innerWidth - yesBtn.offsetWidth - 20;
+      const maxY = window.innerHeight - yesBtn.offsetHeight - 20;
+
+      yesBtn.style.position = "absolute";
+      yesBtn.style.left = Math.random() * maxX + "px";
+      yesBtn.style.top = Math.random() * maxY + "px";
+    }
+
+    // STAGE 1: FIRST NO - SHOW SAD MESSAGE + TWO NO BUTTONS
+    function firstNo() {
+      if (stage !== 0) return;
+
+      stage = 1;
+      document.getElementById("question").innerText = "Hawwwwww 😭 You said no 😤😂";
+
+      document.getElementById("buttons").innerHTML = `
+        <button class="noBtn" onclick="secondStage()">No</button>
+        <button class="noBtn" onclick="secondStage()">No</button>
+      `;
+    }
+
+    // STAGE 2: SECOND NO - SHOW REALLY MESSAGE + TWO NO BUTTONS
+    function secondStage() {
+      if (stage !== 1) return;
+
+      stage = 2;
+      document.getElementById("question").innerText = "Really??? 🥺";
+
+      document.getElementById("buttons").innerHTML = `
+        <button class="noBtn" onclick="thirdStage()">No</button>
+        <button class="noBtn" onclick="thirdStage()">No</button>
+      `;
+    }
+
+    // STAGE 3: THIRD NO - SHOW ONE LAST CHANCE + ONLY YES BUTTON
+    function thirdStage() {
+      if (stage !== 2) return;
+
+      stage = 3;
+      yesClicks = 0;
+      document.getElementById("question").innerText = "Okay… one last chance 🥹";
+
+      document.getElementById("buttons").innerHTML = `
+        <button id="finalYes" onclick="finalYes()" style="font-size: 16px;">YES 💖</button>
+      `;
+    }
+
+    // STAGE 4: FINAL YES - BUTTON GROWS WITH EACH CLICK
+    function finalYes() {
+      yesClicks++;
+
+      const btn = document.getElementById("finalYes");
+      const newSize = 16 + yesClicks * 4; // Increase font size
+      const newPadding = 12 + yesClicks * 3; // Increase padding
+
+      btn.style.fontSize = newSize + "px";
+      btn.style.padding = newPadding + "px " + (25 + yesClicks * 5) + "px";
+      btn.classList.add("growing");
+
+      if (yesClicks >= 7) {
+        stage = 4;
+        document.getElementById("question").innerText = "YAYAYAYAYAYAYAYAYAYAYAAAYAYAY MY SWEEEEEET SMALLLL GUGULALA SAID YESSSSSSSS THANKS FOR MAKING ME CRY YESTERDAY YOU ARE THE BEST GIRLFRIEND OOOOPS WIFE EVER(YOU HAVE SAID YES)";
+
+        document.getElementById("buttons").innerHTML = `
+          <p style="font-size: 18px; color: #ff5e78; font-weight: bold;">Forever starts now 💞</p>
+          <button class="revealBtn" onclick="revealPlan()">Click here to reveal today's plan 🎉</button>
+        `;
+      }
+    }
+
+    // STAGE 5: CONFUSING REVEAL - BUTTON MOVES AROUND
+    function revealPlan() {
+      revealClicks++;
+
+      if (revealClicks === 1) {
+        document.getElementById("buttons").innerHTML = `
+          <p class="oops-text">Oops i meant here 👉</p>
+          <button class="revealBtn" onclick="revealPlan()" style="margin-left: 100px;">Click here 🎉</button>
+        `;
+      } else if (revealClicks === 2) {
+        document.getElementById("buttons").innerHTML = `
+          <p class="oops-text">Wait no here 👈</p>
+          <button class="revealBtn" onclick="revealPlan()" style="margin-right: 100px;">Click here 🎉</button>
+        `;
+      } else if (revealClicks === 3) {
+        document.getElementById("buttons").innerHTML = `
+          <p class="oops-text">Actually here ⬇️</p>
+          <button class="revealBtn" onclick="revealPlan()" style="margin-top: 50px;">Click here 🎉</button>
+        `;
+      } else if (revealClicks === 4) {
+        document.getElementById("buttons").innerHTML = `
+          <p class="oops-text">No wait up here ⬆️</p>
+          <button class="revealBtn" onclick="revealPlan()" style="margin-bottom: 50px;">Click here 🎉</button>
+        `;
+      } else if (revealClicks >= 5) {
+        // FINAL REVEAL
+        stage = 5;
+        document.getElementById("buttons").innerHTML = `
+          <div class="final-message">
+            Since i can't give you a ring rn<br>
+            I'll atleast bring you a<br>
+            <strong>Chilly Cheese Toast 🧀</strong><br><br>
+            Wait for me at the usual spot 😉
+          </div>
+        `;
+      }
+    }
+  </script>
+
+</body>
+</html>
